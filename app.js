@@ -1,10 +1,11 @@
 const express               = require('express');
-const bodyParser 			= require('body-parser');
+const bodyParser 			= require('body-parser');	
 const exSession 			= require('express-session');
 
 const adminHome             = require('./controllers/ahome');
 const admin                 = require('./controllers/admin');
 const login                 = require('./controllers/login');
+const teacher   			= require('./controllers/teacher');
 const logout				= require('./controllers/logout');
 const app	                = express();
 
@@ -17,6 +18,7 @@ app.use('/assets',express.static('assets'));
 app.use('/ahome',adminHome);
 app.use('/admin',admin);
 app.use('/login',login);
+app.use('/teacher',teacher);
 app.use('/logout', logout);
 
 app.get('/',(req, res)=>{
