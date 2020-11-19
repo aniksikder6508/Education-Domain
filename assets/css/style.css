@@ -4,6 +4,12 @@ body {
   color: gray;
   font-weight: 300;
   font-size: 1.1rem; }
+  #togglePassword{
+    cursor: pointer;
+    margin-right: 30px;
+    position: relative;
+    
+  }
 
 ::-moz-selection {
   background: #000;

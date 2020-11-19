@@ -28,8 +28,6 @@
 
 
 
-
-
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -54,8 +52,7 @@
             <a href="#" class="small mr-3"><span class="icon-phone2 mr-2"></span> 10 20 123 456</a> 
             <a href="#" class="small mr-3"><span class="icon-envelope-o mr-2"></span> info@mydomain.com</a> 
           </div>
-          <div class="col-lg-3 text-right">
-          </div>
+
         </div>
       </div>
     </div>
@@ -64,11 +61,30 @@
       <div class="container">
         <div class="d-flex align-items-center">
           <div class="site-logo">
-            <a href="index.html" class="d-block">
+            <a href="" class="d-block">
               <img src="../../assets/images/logo.jpg" alt="Image" class="img-fluid">
             </a>
           </div>
-          
+          <div class="mr-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li>
+                  <a href="/admin" class="nav-link text-left">Home</a>
+                </li>
+                <li>
+                  <a href="/admin/adduser" class="nav-link text-left">User Enroll</a>
+                </li>
+                <li>
+                  <a href="/admin/edituser" class="nav-link text-left">User Information</a>
+                </li>
+                <li>
+                  <a href="" class="nav-link text-left">Book</a>
+                </li>
+                
+              </ul>                                                                                                                                                                                                                  
+            </nav>
+
+          </div>
           <div class="ml-auto">
             <div class="social-wrap">
               <a href="#"><span class="icon-facebook"></span></a>
@@ -90,15 +106,13 @@
         <div class="container">
           <div class="row align-items-end justify-content-center text-center">
             <div class="col-lg-7">
-              <h2 class="mb-0">Login</h2>
-              <p></p>
+              <h2 class="mb-0">Add New Course</h2>
+             <p></p>
             </div>
           </div>
         </div>
       </div> 
-    
 
-    
 
     <div class="site-section">
         <div class="container">
@@ -106,27 +120,65 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-5">
-                    
-                        <form method="post">
-                          <div class="row">
-                            <div class="col-md-12 form-group">
-                            <label >ID</label>
-                            <input type="text" name="id" class="form-control form-control-lg">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="username">Name</label>
+                            <input type="text" id="username" name="username" class="form-control form-control-lg">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg">
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="pword">Password</label>
-                            <input type="password"  name="password" class="form-control form-control-lg">
+                            <input type="password" id="pword" name="password" class="form-control form-control-lg">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control form-control-lg">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="dob">Birthday</label>
+                            <input type="date" class="form-control form-control-lg">
+                        </div>
+                         <div class="col-md-12 form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control form-control-lg">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="dob">Contact</label>
+                            <input type="text" class="form-control form-control-lg">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="gender">Blood Group</label>
+                            <select class="form-control form-control-lg">
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="gender">User Type</label>
+                            <select class="form-control form-control-lg">
+                                <option value="admin">Admin</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="student" selected>Student</option>
+                            </select>
                         </div>
                     </div>
-                      <div class="row">
+                    <div class="row">
                         <div class="col-12">
-                            <input type="submit" name="submit"value="Log In" class="btn btn-primary btn-lg px-5">
+                            <input type="submit" value="Register" class="btn btn-primary btn-lg px-5">
                         </div>
-                      </div>
-                        
-                        </form>
-                        
-                    
+                    </div>
                 </div>
             </div>
             
@@ -194,7 +246,7 @@
     </div>
     
 
-
+  </div>
   <!-- .site-wrap -->
 
   <!-- loader -->

@@ -2,7 +2,7 @@ const db = require('./db');
 
 module.exports= {
 	validate: function(user, callback){
-		var sql ="" ;//"select * from userinfo where username='"+user.username+"' and password='"+user.password+"'";
+		var sql ="select * from userinfo where id='"+user.id+"' and password='"+user.password+"'";
 		db.getResults(sql, function(results){
 			if(results.length >0 ){
 				callback(results[0]);
@@ -12,7 +12,17 @@ module.exports= {
 		});
 	},
 	getById: function(id, callback){
-		var sql ="" ;//"select * from userinfo where username='"+id.id+"'";
+		var sql ="select * from userinfo where id='"+id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+	getLastId: function(callback){
+		var sql ="select * from userinfo ORDER BY id DESC LIMIT 1 "; //"select * from userinfo where username='"+id.id+"'";
 		db.getResults(sql, function(results){
 			if(results.length >0 ){
 				callback(results[0]);
@@ -28,7 +38,9 @@ module.exports= {
 		});
 	},
 	insert: function(user, callback){
-		var sql ="" ;// "insert into userinfo (name,username,password,contact,type,gender) values('"+user.name+"','"+user.username+"','"+user.password+"','"+user.contact+"','"+user.type+"','"+user.gender+"')";
+		console.log('excute');
+		console.log(user);
+		var sql ="insert into userinfo (id,name,username,email,password,gender,address,dob,contact,blood,status,type) values('"+user.id+"','"+user.name+"','"+user.username+"','"+user.email+"','"+user.password+"','"+user.gender+"','"+user.address+"','"+user.dob+"','"+user.contact+"','"+user.blood+"','"+user.status+"','"+user.type+"')";
 		db.execute(sql,function(results){
 			callback(results);
 		});
