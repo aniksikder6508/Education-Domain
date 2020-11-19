@@ -13,11 +13,15 @@ router.post('/',(req,res)=>{
         password:req.body.password
     };
     adminModel.validate(user, function(results){
-		if(results){
+		if(results.type==='Admin'){
             //res.cookie('uname', req.body.username);   
             console.log(req.body.id);
             req.session.sid= req.body.id;
 			res.redirect('/admin');
+        }
+        else if(results.type==='Teacher'){
+            req.session.sid= req.body.id;
+            res.redirect('/teacher');
         }
         else{
             console.log('error');
