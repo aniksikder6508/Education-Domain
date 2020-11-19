@@ -47,7 +47,7 @@ module.exports= {
 
 	},
 	update:function(user, callback){
-		var sql= "" ;//"update userinfo set name='"+user.name+"',password='"+user.password+"',contact='"+user.contact+"' where username='"+user.id+"'";
+		var sql= "update userinfo set password='"+user.password+"'  where id='"+user.id+"'";
 		db.execute(sql,function(results){
 				callback(true);
 		});

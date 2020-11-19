@@ -204,7 +204,61 @@ router.get('/edituser',(req,res)=>{
 });
 
 router.get('/password',(req,res)=>{
-    res.render('admin/password');
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                res.render('admin/password');
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+    
+});
+
+router.post('/password',(req,res)=>{
+    var id=req.session.sid;
+    adminModel.getById(id,function(results){
+        var admin={
+            password:results.password
+        };
+        if(admin.password===req.body.oldpass){
+            if(req.body.newpass===req.body.newpass2){
+                var user={
+                    password:req.body.newpass,
+                    id:req.session.sid
+                }
+                console.log(user);
+                adminModel.update(user,function(results){
+                    if(results){
+                        console.log('Password Reset Successfully');
+                    }
+                    else{
+                        console.log('Query erorr');
+                    }
+                });
+            }
+            else{
+                console.log('Failed');
+            }
+        }
+        else{
+            console.log('Failed');
+        }
+    });
+
 });
 
 
