@@ -200,7 +200,38 @@ router.get('/addcourse',(req,res)=>{
     //res.render('admin/addcourse');
 });
 router.get('/edituser',(req,res)=>{
-    res.render('admin/edituser');
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                name:results.name,
+                email:results.email,
+                gender:results.gender,
+                dob:results.dob,
+                address:results.address,
+                contact:results.contact,
+                blood:results.blood,
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                res.render('admin/edituser',admin);
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+});
+router.post('/edituser',(req,res)=>{
+    
+
 });
 
 router.get('/password',(req,res)=>{

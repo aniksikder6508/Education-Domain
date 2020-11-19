@@ -4,12 +4,7 @@ body {
   color: gray;
   font-weight: 300;
   font-size: 1.1rem; }
-  .fa-eye{
-    cursor: pointer;
-    margin-right: 30px;
-    position: relative;
-    
-  }
+
 
 ::-moz-selection {
   background: #000;
