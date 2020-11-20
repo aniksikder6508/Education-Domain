@@ -37,14 +37,28 @@ module.exports= {
 			callback(results);
 		});
 	},
+	getAllTeacher:function(callback){
+		var sql ="select * from userinfo where (type ='Teacher' AND status='Active')" ;
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 	insert: function(user, callback){
-		console.log('excute');
-		console.log(user);
+		//console.log('excute');
+		//console.log(user);
 		var sql ="insert into userinfo (id,name,username,email,password,gender,address,dob,contact,blood,status,type) values('"+user.id+"','"+user.name+"','"+user.username+"','"+user.email+"','"+user.password+"','"+user.gender+"','"+user.address+"','"+user.dob+"','"+user.contact+"','"+user.blood+"','"+user.status+"','"+user.type+"')";
 		db.execute(sql,function(results){
 			callback(results);
 		});
 
+	},
+	insertCourse:function(course,callback){
+		console.log('Course Insert')
+		var sql="insert into course (courseName,courseId,courseTime,courseDay,courseTeacher) values ('"+course.courseName+"','"+course.courseId+"','"+course.courseTime+"','"+course.courseDay+"','"+course.courseTeacher+"')";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	
 	},
 	update:function(user, callback){
 		var sql= "update userinfo set password='"+user.password+"'  where id='"+user.id+"'";
