@@ -6,6 +6,7 @@ const adminHome             = require('./controllers/ahome');
 const admin                 = require('./controllers/admin');
 const login                 = require('./controllers/login');
 const teacher   			= require('./controllers/teacher');
+const student  			    = require('./controllers/student');
 const logout				= require('./controllers/logout');
 const app	                = express();
 
@@ -19,6 +20,7 @@ app.use('/ahome',adminHome);
 app.use('/admin',admin);
 app.use('/login',login);
 app.use('/teacher',teacher);
+app.use('/student',student);
 app.use('/logout', logout);
 
 app.get('/',(req, res)=>{
