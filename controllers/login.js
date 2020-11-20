@@ -19,7 +19,7 @@ router.post('/',(req,res)=>{
             req.session.sid= req.body.id;
 			res.redirect('/admin');
         }
-        else if(results.type==='Teacher'){
+        else if(results.type ==='Teacher'){
             req.session.sid= req.body.id;
             res.redirect('/teacher');
         }
