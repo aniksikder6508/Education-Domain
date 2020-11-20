@@ -23,6 +23,10 @@ router.post('/',(req,res)=>{
             req.session.sid= req.body.id;
             res.redirect('/teacher');
         }
+        else if(results.type==='Student'){
+            req.session.sid= req.body.id;
+            res.redirect('/student');
+        }
         else{
             console.log('error');
             res.redirect('/login');
