@@ -37,10 +37,32 @@ module.exports= {
 			callback(results);
 		});
 	},
+	getNews: function(id,callback){
+		var sql = "select * from news where id='"+id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
 	getAllTeacher:function(callback){
 		var sql ="select * from userinfo where (type ='Teacher' AND status='Active')" ;
 		db.getResults(sql, function(results){
 			callback(results);
+		});
+	},
+	getAllNews:function(callback){
+		var sql ="select * from news where type='News'";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+	getAllNotices:function(callback){
+		var sql ="select * from news where type='Notices'";
+		db.getResults(sql, function(results2){
+			callback(results2);
 		});
 	},
 	insert: function(user, callback){
@@ -67,10 +89,44 @@ module.exports= {
 		});
 	
 	},
+	insertNews:function(news,callback){
+		var sql="insert into news (title,description,type) values ('"+news.title+"','"+news.description+"','"+news.type+"')";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	
+	},
+	insertNotices:function(news,callback){
+		var sql="insert into notices (title,description) values ('"+news.title+"','"+news.description+"')";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	
+	},
+	updateAdminInfo:function(admin,callback){
+		var sql="update userinfo set name='"+admin.name+"',email='"+admin.email+"',gender='"+admin.gender+"',address='"+admin.address+"',dob='"+admin.dob+"',blood='"+admin.blood+"' where id='"+admin.id+"'";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	},
 	update:function(user, callback){
 		var sql= "update userinfo set password='"+user.password+"'  where id='"+user.id+"'";
 		db.execute(sql,function(results){
 				callback(true);
+		});
+
+	},
+	updateNews:function(updateNews, callback){
+		var sql= "update news set title='"+updateNews.title+"',description='"+updateNews.description+"',type='"+updateNews.type+"' where id='"+updateNews.id+"'";
+		db.execute(sql,function(results){
+				callback(true);
+		});
+
+	},
+	deleteNews:function(deleteNews, callback){
+		var sql="delete from news where id='"+deleteNews.id+"'";
+		db.execute(sql,function(results){
+			callback(true);
 		});
 
 	},
