@@ -48,7 +48,7 @@
       <div class="container">
         <div class="d-flex align-items-center">
           <div class="site-logo">
-            <a href="portal.html" class="d-block">
+            <a href="/student" class="d-block">
               <img src="../../assets/images/logo.jpg" alt="Image" class="img-fluid">
             </a>
           </div>
@@ -56,30 +56,31 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li class="active">
-                  <a href="Courses&Result.html" class="nav-link text-left">Corses & Result</a>
+                  <a href="student/CoursesResult" class="nav-link text-left">Courses & Result</a>
                 </li>
                 <li>
                   <a href="#" class="nav-link text-left">Registration</a>
                 </li>
                 <li>
-                  <a href="GradeReport.html" class="nav-link text-left">Grade Report</a>
+                  <a href="student/GradeReport" class="nav-link text-left">Grade Report</a>
                 </li>
                 <li>
-                    <a href="Notice.html" class="nav-link text-left">Notice</a>
+                    <a href="student/Notice" class="nav-link text-left">Notice</a>
                   </li>
                   <li>
-                    <a href="Profile.html" class="nav-link text-left">Profile</a>
+                    <a href="student/Profile" class="nav-link text-left">Profile</a>
                   </li>
                   <li class="has-children">
-                    <a href="portal.html" class="nav-link text-left">Others</a>
+                    <a href="/student" class="nav-link text-left">Others</a>
                     <ul class="dropdown">
-                      <li><a href="Library.html">Library</a></li>
-                      <li><a href="Email.html">MailBox</a></li>
+                      <li><a href="student/Library">Library</a></li>
+                      <li><a href="student/email">MailBox</a></li>
                     </ul>
                   </li>
-                  <li>
-                    <a href="index.html" class="nav-link text-left">Logout</a>
-                  </li>
+                  <div class="col-lg-6">
+                     <a href="/logout" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Logout</a>
+                    </div>
+
               </ul>                                                                                                                                                                                                                                                                                          </ul>
             </nav>
 
@@ -92,7 +93,7 @@
 
     
     <div class="hero-slide owl-carousel site-blocks-cover">
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+      <div class="intro-section" style="background-image: url('../../assets/images/hero_1.jpg');">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
@@ -102,7 +103,7 @@
         </div>
       </div>
 
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+      <div class="intro-section" style="background-image: url('../../assets/images/hero_1.jpg');">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
@@ -126,44 +127,30 @@
             </h2>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-
-            <div class="feature-1 border">
-              <div class="icon-wrapper bg-primary">
-                <span class="flaticon-mortarboard text-white"></span>
-              </div>
-              <div class="feature-1-content">
-                <h2>Personalize Learning</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-                <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-            <div class="feature-1 border">
-              <div class="icon-wrapper bg-primary">
-                <span class="flaticon-school-material text-white"></span>
-              </div>
-              <div class="feature-1-content">
-                <h2>Trusted Courses</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-                <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-              </div>
-            </div> 
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-            <div class="feature-1 border">
-              <div class="icon-wrapper bg-primary">
-                <span class="flaticon-library text-white"></span>
-              </div>
-              <div class="feature-1-content">
-                <h2>Tools for Students</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-                <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-              </div>
-            </div> 
-          </div>
+        <div class="col-md-12 form-group">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Course Id</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Teacher Name</th>
+                <th scope="col">Class Time</th>
+              
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<courseinfo.length; i++){ %> 
+              <tr>
+                <th scope="row"><%=i+1  %> </th>
+                <td><%=courseinfo[i].id  %> </td>
+                <td><%=courseinfo[i].courseName  %></td>
+                <td><%=courseinfo[i].teacherName  %></td>
+                <td><%=courseinfo[i].timing  %></td>
+              </tr>
+            <% } %> 
+          </tbody>
+          </table>
         </div>
       </div>
     </div>

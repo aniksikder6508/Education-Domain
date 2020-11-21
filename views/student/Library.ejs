@@ -44,11 +44,11 @@
       <div class="site-mobile-menu-body"></div>
     </div>  
         </div>
-    <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('images/bg_1.jpg')">
+    <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('../../assets/images/bg_1.jpg')">
         <div class="container">
           <div class="row align-items-end justify-content-center text-center">
             <div class="col-lg-7">
-              <h1 class="mb-0">Courses & Result</h1>
+              <h1 class="mb-0">Library</h1>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
 
     <div class="custom-breadcrumns border-bottom">
       <div class="container">
-        <a href="portal.html">Home</a>
+        <a href="/student">Home</a>
         <span class="mx-3 icon-keyboard_arrow_right"></span>
         <span class="current">Library</span>
       </div>
@@ -71,16 +71,13 @@
                 <div class="col-md-5">
                     <div class="row">
                       <div class="col-md-12 form-group">
-                        <label for="inputState">Book Name:</label>
-                        <select id="inputState" class="form-control">
-                          <option selected>Search By Id...</option>
-                          <option>...</option>
-                        </select>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
                       </div>
                       <div class="col-md-12 form-group">
                         <label for="inputState">Otherwise:</label>
                         <select id="inputState" class="form-control">
-                          <option selected>Search Text...</option>
+                          <option selected>Search By Id...</option>
                           <option>...</option>
                         </select>
                       </div>
@@ -89,19 +86,19 @@
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Book Title</th>
-                                <th scope="col">Edition</th>
+                                <th scope="col">Book Id</th>
+                                <th scope="col">Book Name</th>
                                 <th scope="col">Author Name</th>
-                                <th scope="col">Subjects</th>
-                                <th scope="col">shelf No.</th>
+                                <th scope="col">Category</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <td></td>
+                                <td><%= bookName %></td>
+                                <td><%= author %></td>
+                                <td><%= category %> </td>
                               </tr>
                           </tbody>
                           </table>

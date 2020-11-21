@@ -1,0 +1,32 @@
+[
+    {
+        "courseName": "Physics 1"
+    },
+    {
+        "courseName": "Physics 2"
+    },
+    {
+        "courseName":"Math 1"
+    },
+    {
+        "courseName":"Math 2"
+    },
+    {
+        "courseName":"Math 3"
+    },
+    {
+        "courseName":"Math 4"
+    },
+    {
+        "courseName":"Math 5"
+    },
+    {
+        "courseName":"English 1"
+    },
+    {
+        "courseName":"English 2"
+    },
+    {
+        "courseName":"English 3"
+    }
+]

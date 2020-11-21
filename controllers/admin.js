@@ -186,7 +186,12 @@ router.get('/addcourse',(req,res)=>{
             };
             console.log(admin);
             if(admin.type==='Admin' && admin.status==='Active'){
-                res.render('admin/addcourse');
+                adminModel.getAllTeacher(function(results){
+                    /*var teacher={
+                        courseTeacher:results.name
+                    };*/
+                    res.render('admin/addcourse',{users:results});
+                });
             }
             else{
                 res.redirect('/login');
@@ -199,6 +204,28 @@ router.get('/addcourse',(req,res)=>{
     }
     //res.render('admin/addcourse');
 });
+
+router.post('/addcourse',(req,res)=>{
+
+    var course={
+        courseName:req.body.courseName,
+        courseId:'100',
+        courseTime:req.body.courseTime,
+        courseDay:req.body.courseDay,
+        courseTeacher:req.body.courseTeacher
+    };
+    adminModel.insertCourse(course,function(results){
+        if(results){
+            console.log('Success');
+            console.log(course);
+        }
+        else{
+            console.log('Failed');
+        }
+    });
+
+});
+
 router.get('/edituser',(req,res)=>{
     if(req.session.sid != null){
         var id=req.session.sid;
@@ -230,6 +257,27 @@ router.get('/edituser',(req,res)=>{
     }
 });
 router.post('/edituser',(req,res)=>{
+    var id=req.session.sid;
+    var admininfo={
+        name:req.body.name,
+        email:req.body.email,
+        gender:req.body.gender,
+        dob:req.body.dob,
+        address:req.body.address,
+        contact:req.body.contact,
+        blood:req.body.blood,
+        id:id
+    };
+    console.log(admininfo);
+    adminModel.updateAdminInfo(admininfo,function(results){
+        if(results){
+            console.log('Updated');
+        }
+        else{
+            console.log('can not updated');
+        }
+
+    });
     
 
 });
@@ -288,6 +336,172 @@ router.post('/password',(req,res)=>{
         else{
             console.log('Failed');
         }
+    });
+
+});
+
+router.get('/user',(req,res)=>{
+        res.render('admin/user');
+});
+router.get('/book',(req,res)=>{
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                res.render('admin/book')
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+    //res.render('admin/book');
+});
+router.post('/book',(req,res)=>{
+    var book={
+        bookName:req.body.bookName,
+        author:req.body.author,
+        category:req.body.category
+    };
+    adminModel.insertBook(book,function(results){
+        if(results){
+            res.render('admin/book');
+        }
+        else{
+            console.log('Opps!! something Wrong');
+        }
+    });
+
+});
+router.get('/news',(req,res)=>{
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                adminModel.getAllNews(function(results){
+                    adminModel.getAllNotices(function(results2){
+                        console.log(results2);
+                        res.render('admin/news',{users:{results,results2}});
+                    });
+                });
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+});
+
+router.post('/news',(req,res)=>{
+        var news={
+            title:req.body.title,
+            description:req.body.description,
+            type:req.body.type
+        }
+        adminModel.insertNews(news,function(results){
+            if(results){
+                req.body.type=="";
+                req.body.description=="";
+                adminModel.getAllNews(function(results){
+                    adminModel.getAllNotices(function(results2){
+                        console.log(results2);
+                        res.render('admin/news',{users:{results,results2}});
+                    });
+                });
+            }
+            else{
+                console.log('Error on news')
+            }
+        });
+        
+    
+    
+
+});
+router.get('/editnews/:id',(req,res)=>{
+    //res.render('admin/editnews');
+    var id=req.params.id;
+   // var id=req.query.nid;
+    console.log(id);
+    adminModel.getNews(id,function(results){
+        console.log('erorr finding');
+        console.log(results);
+        var news={
+            title:results.title,
+            description:results.description,
+            type:results.type
+        }
+        res.render('admin/editnews',news);
+    });
+    
+});
+router.post('/editnews/:id',(req,res)=>{
+    var updateNews={
+        id:req.params.id,
+        title:req.body.title,
+        description:req.body.description,
+        type:req.body.type
+    }
+    adminModel.updateNews(updateNews,function(results){
+        adminModel.getAllNews(function(results){
+            adminModel.getAllNotices(function(results2){
+                console.log(results2);
+                res.render('admin/news',{users:{results,results2}});
+            });
+        });
+        
+    });
+
+});
+router.get('/deletenews/:id',(req,res)=>{
+    var id=req.params.id;
+   // var id=req.query.nid;
+    //console.log(id);
+    adminModel.getNews(id,function(results){
+       // console.log('erorr finding');
+        console.log(results);
+        var news={
+            title:results.title,
+            description:results.description,
+            type:results.type
+        }
+        res.render('admin/deletenews',news);
+    });
+    
+});
+router.post('/deletenews/:id',(req,res)=>{
+    var deleteNews={
+        id:req.params.id,
+       
+    }
+    adminModel.deleteNews(deleteNews,function(results){
+        adminModel.getAllNews(function(results){
+            adminModel.getAllNotices(function(results2){
+                console.log(results2);
+                res.render('admin/news',{users:{results,results2}});
+            });
+        });
+        
     });
 
 });
