@@ -53,8 +53,15 @@ module.exports= {
 
 	},
 	insertCourse:function(course,callback){
-		console.log('Course Insert')
+		console.log('Course Insert');
 		var sql="insert into course (courseName,courseId,courseTime,courseDay,courseTeacher) values ('"+course.courseName+"','"+course.courseId+"','"+course.courseTime+"','"+course.courseDay+"','"+course.courseTeacher+"')";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	
+	},
+	insertBook:function(book,callback){
+		var sql="insert into library (bookName,author,category) values ('"+book.bookName+"','"+book.author+"','"+book.category+"')";
 		db.execute(sql,function(results){
 			callback(results);
 		});
