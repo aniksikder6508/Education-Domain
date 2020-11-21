@@ -186,7 +186,12 @@ router.get('/addcourse',(req,res)=>{
             };
             console.log(admin);
             if(admin.type==='Admin' && admin.status==='Active'){
-                res.render('admin/addcourse');
+                adminModel.getAllTeacher(function(results){
+                    /*var teacher={
+                        courseTeacher:results.name
+                    };*/
+                    res.render('admin/addcourse',{users:results});
+                });
             }
             else{
                 res.redirect('/login');
@@ -199,6 +204,28 @@ router.get('/addcourse',(req,res)=>{
     }
     //res.render('admin/addcourse');
 });
+
+router.post('/addcourse',(req,res)=>{
+
+    var course={
+        courseName:req.body.courseName,
+        courseId:'100',
+        courseTime:req.body.courseTime,
+        courseDay:req.body.courseDay,
+        courseTeacher:req.body.courseTeacher
+    };
+    adminModel.insertCourse(course,function(results){
+        if(results){
+            console.log('Success');
+            console.log(course);
+        }
+        else{
+            console.log('Failed');
+        }
+    });
+
+});
+
 router.get('/edituser',(req,res)=>{
     if(req.session.sid != null){
         var id=req.session.sid;
