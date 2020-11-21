@@ -75,7 +75,8 @@
                         <label for="inputState">Course Name:</label>
                         <select id="inputState" class="form-control">
                           <option selected>Choose Your Course...</option>
-                          <option>...</option>
+                          <option selected>  <%=courseName%></option>
+                        
                         </select>
                       </div>
                         <div class="col-md-12 form-group">
@@ -83,17 +84,17 @@
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Course Total Marks</th>
+                                <th scope="col">Course Id</th>
+                                <th scope="col">Course Name</th>
                                 <th scope="col">Course Grade</th>
-                                <th scope="col">Status</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <td> <%=id%></td>
+                                <td> <%=courseName%></td>
+                                <td> <%=grade%></td>
                               </tr>
                           </tbody>
                           </table>
@@ -128,9 +129,7 @@
   <script src="../../assets/js/jquery.sticky.js"></script>
   <script src="../../assets/js/jquery.mb.YTPlayer.min.js"></script>
 
-
-
-
+  
   <script src="../../assets/js/main.js"></script>
 
 </body>
