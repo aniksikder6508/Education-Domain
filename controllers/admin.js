@@ -319,5 +319,50 @@ router.post('/password',(req,res)=>{
 
 });
 
+router.get('/user',(req,res)=>{
+        res.render('admin/user');
+});
+router.get('/book',(req,res)=>{
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                res.render('admin/book')
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+    //res.render('admin/book');
+});
+router.post('/book',(req,res)=>{
+    var book={
+        bookName:req.body.bookName,
+        author:req.body.author,
+        category:req.body.category
+    };
+    adminModel.insertBook(book,function(results){
+        if(results){
+            res.render('admin/book');
+        }
+        else{
+            console.log('Opps!! something Wrong');
+        }
+    });
+
+});
+
+
 
 module.exports =router;

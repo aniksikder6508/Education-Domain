@@ -1,42 +1,32 @@
 [
     {
-        "courseName": "Physics 1",
-        "courseId":"101"
+        "courseName": "Physics 1"
     },
     {
-        "courseName": "Physics 2",
-        "courseId":"102"
+        "courseName": "Physics 2"
     },
     {
-        "courseName":"Math 1",
-        "courseId":"103"
+        "courseName":"Math 1"
     },
     {
-        "courseName":"Math 2",
-        "courseId":"104"
+        "courseName":"Math 2"
     },
     {
-        "courseName":"Math 3",
-        "courseId":"105"
+        "courseName":"Math 3"
     },
     {
-        "courseName":"Math 4",
-        "courseId":"106"
+        "courseName":"Math 4"
     },
     {
-        "courseName":"Math 5",
-        "courseId":"107"
+        "courseName":"Math 5"
     },
     {
-        "courseName":"English 1",
-        "courseId":"108"
+        "courseName":"English 1"
     },
     {
-        "courseName":"English 2",
-        "courseId":"109"
+        "courseName":"English 2"
     },
     {
-        "courseName":"English 3",
-        "courseId":"110"
+        "courseName":"English 3"
     }
 ]
