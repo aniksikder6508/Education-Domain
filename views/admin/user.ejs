@@ -114,44 +114,43 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
+                  <form>
                     <div class="row">
                         <div class="col-md-8 form-group">
-                            <input type="text" class="form-control form-control-lg">
+                            <input type="text" name="id" id="id" class="form-control form-control-lg">
                         </div  class="col-md-4 form-group">
                         <div>
-                            <input type="button" value="Search" class="btn btn-primary btn-lg px-5">
+                            <input type="button" id="ajaxSearch" value="Search" class="btn btn-primary btn-lg px-5">
                         </div>
                     </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
-                        <label for="username">Name:</label>
+                        <label for="name">Name:</label>
                         <input type="text" id="name" name="name" value="" class="form-control form-control-lg"> 
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="email">Email</label>
-                        <input type="text" id="name" name="name" value="" class="form-control form-control-lg"> 
+                        <input type="text" id="email" name="email" value="" class="form-control form-control-lg"> 
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="gender">Gender</label>
-                        <select name="gender" class="form-control form-control-lg">
-                      </select>
+                        <input type="text" id="gender" name="gender" value="" class="form-control form-control-lg"> 
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="dob">Birthday</label>
-                        <input type="text" id="name" name="name" value="" class="form-control form-control-lg"> 
+                        <input type="text" id="dob" name="dob" value="" class="form-control form-control-lg"> 
                     </div>
                      <div class="col-md-12 form-group">
                         <label for="address">Address</label>
-                        <input type="text" id="name" name="name" value="" class="form-control form-control-lg"> 
+                        <input type="text" id="address" name="address" value="" class="form-control form-control-lg"> 
                     </div>
                     <div class="col-md-12 form-group">
-                        <label for="dob">Contact</label>
-                        <input type="text" id="name" name="name" value="" class="form-control form-control-lg"> 
+                        <label for="contact">Contact</label>
+                        <input type="text" id="contact" name="contact" value="" class="form-control form-control-lg"> 
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="blood">Blood Group</label>
-                        <select name="blood" class="form-control form-control-lg">
-                      </select>
+                        <input type="text" id="blood" name="blood" value="" class="form-control form-control-lg"> 
                     </div>
                 </div>
                     <div class="row">
@@ -159,7 +158,9 @@
                             <input type="submit" value="Save Changes" name="submit" class="btn btn-primary btn-lg px-5">
                         </div>
                     </div>
+                   
                 </div>
+              </form>
             </div>
         </div>
     </div>
@@ -248,6 +249,35 @@
 
 
   <script src="../../assets/js/main.js"></script>
+  <script>
+    $(document).ready(function(){
+        $("#ajaxSearch").click((e) => {
+            e.preventDefault();
+            var search = $("#id").val();
+            $.ajax({
+                url: "/admin/user",
+                data: { search: search },
+                method: "post",
+                contentType: "application/x-www-form-urlencoded",
+                success: function(data){
+                    var results = data.results;
+                    $("#id").val('');
+                      $("#name").val(results.name);
+                      $("#email").val(results.email);
+                      $("#gender").val(results.gender);
+                      $("#dob").val(results.dob);
+                      $("#address").val(results.address);
+                      $("#contact").val(results.contact);
+                      $("#blood").val(results.blood);
+                }, error: function(err) {
+                    alert(err);
+                }
+            });
+            
+            
+        });
+    });
+</script>
 
 </body>
 

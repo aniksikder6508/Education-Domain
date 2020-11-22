@@ -123,6 +123,16 @@ module.exports= {
 		});
 
 	},
+	search: function(search, callback){
+		var sql = "select * from userinfo WHERE id = '"+search+"' OR name = '"+search+"' OR email = '"+search+"' OR contact = '"+search+"'  OR type = '"+search+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
 	deleteNews:function(deleteNews, callback){
 		var sql="delete from news where id='"+deleteNews.id+"'";
 		db.execute(sql,function(results){
