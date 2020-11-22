@@ -11,8 +11,24 @@ module.exports= {
 			}
 		});
 	},
-	getById2: function(id, callback){
-		var sql ="select * from course where sid='"+id+"'";
+	getbysubject:function(id, callback){
+		var sql ="select * from course ";
+		db.getResults(sql, function(results){
+				callback(results)
+		});
+	},
+	getbylibrary: function(callback){
+		var sql ="select * from library ";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+	getById: function(id, callback){
+		var sql ="select * from userinfo where id='"+id+"'";
 		db.getResults(sql, function(results){
 			if(results.length >0 ){
 				callback(results[0]);
@@ -46,8 +62,8 @@ module.exports= {
 	 	});
 
 	 },
-	update:function(user, callback){
-		var sql= "update course set grade='"+user.grade+"'  where id='"+user.courseName+"'";
+	 update:function(user, callback){
+		var sql= "update userinfo set password='"+user.password+"'  where id='"+user.id+"'";
 		db.execute(sql,function(results){
 				callback(true);
 		});
@@ -58,5 +74,42 @@ module.exports= {
 		db.execute(sql,function(results){
 			callback(true);
 		});
+	},
+
+	////
+	
+	getAll1: function(callback){
+		var sql ="select * from notice";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+
+	getById2: function(id, callback){
+		var sql ="select * from notice where id='"+id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+	delete1: function(deleteEmail, callback){
+		var sql="delete from notice where id='"+deleteEmail.id+"'";
+		db.execute(sql,function(results){
+			callback(true);
+		});
+
+	},
+	delete2: function(deletenotice, callback){
+		var sql="delete from notice where id='"+deletenotice.id+"'";
+		db.execute(sql,function(results){
+			callback(true);
+		});
+
 	}
+
+
 }

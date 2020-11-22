@@ -372,8 +372,8 @@ router.post('/user',(req,res)=>{
         res.json({
             results: results
         });
-        console.log(results);
     });
+    
 });
 router.get('/book',(req,res)=>{
     if(req.session.sid != null){

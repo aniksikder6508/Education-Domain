@@ -66,4 +66,178 @@ router.post('/notice',(req,res)=>{
 });
 
 
+
+
+router.get('/checknotice',(req,res)=>{
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        teacherModel.getAll(function(results){
+           res.render('teacher/checknotice',{users: results});    
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+});
+
+router.get('/edit/:id', (req, res)=>{
+    var id=req.params.id;
+    console.log(id);
+    if(req.session.sid != null){
+       teacherModel.getById(id,function(results){
+           var editnotice={
+               id:results.id,
+               notice:results.notice
+           };
+           res.render('teacher/noticeedit',editnotice);
+       })
+    }
+	
+});
+
+
+
+
+router.post('/edit/:id', (req, res)=>{
+    var editnotice={
+     id:req.params.id,
+     notice:req.body.update
+    }
+    //console.log("edit id:"+id);
+    if(req.session.sid != null){
+       teacherModel.update(editnotice,function(results){
+           
+           res.redirect('/teacher');
+       })
+    }
+	
+});
+
+
+router.get('/delete/:id', (req, res)=>{
+    var id=req.params.id;
+    console.log(id);
+    if(req.session.sid != null){
+       teacherModel.getById(id,function(results){
+           var deletenotice={
+               id:results.id,
+               notice:results.notice
+           };
+           res.render('teacher/noticedelete',deletenotice);
+       })
+    }
+	
+});
+
+
+
+
+router.post('/delete/:id', (req, res)=>{
+    var deletenotice={
+        id:req.params.id
+    }
+    if(req.session.sid != null){
+        teacherModel.delete(deletenotice,function(results){
+            
+            res.redirect('/teacher');
+        })
+     }
+
+});
+
+
+router.get('/studentlist',(req,res)=>{
+
+    if(req.session.sid != null){
+       // var id=req.session.sid;
+        teacherModel.studentlist(function(results){
+            res.render('teacher/studentlist',{users: results});
+            });
+    }
+    else{
+        res.redirect('/login');
+    }
+
+ 
+    
+});
+
+
+router.get('/class',(req,res)=>{
+   
+    if(req.session.sid != null){
+        // var id=req.session.sid;
+         teacherModel.classroutine(function(results){
+             res.render('teacher/class',{users: results});
+             });
+     }
+     else{
+         res.redirect('/login');
+     }
+   
+    
+});
+
+
+router.get('/password',(req,res)=>{
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+       teacherModel.getPassword(id,function(results){
+            var teacher={
+                status:results.status,
+                type:results.type
+            };
+            console.log(teacher);
+            if(teacher.type==='Teacher' && teacher.status==='Active'){
+                res.render('teacher/password');
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+    
+});
+
+router.post('/password',(req,res)=>{
+    var id=req.session.sid;
+    teacherModel.getPassword(id,function(results){
+        var teacher={
+            password:results.password
+        };
+        if(teacher.password===req.body.oldpass){
+            if(req.body.newpass===req.body.newpass2){
+                var user={
+                    password:req.body.newpass,
+                    id:req.session.sid
+                }
+                console.log(user);
+                teacherModel.updatePassword(user,function(results){
+                    if(results){
+                        res.redirect('/teacher');
+                    }
+                    else{
+                        console.log('Query erorr');
+                    }
+                });
+            }
+            else{
+                console.log('Failed');
+            }
+        }
+        else{
+            console.log('Failed');
+        }
+    });
+
+});
+
+
+
+
 module.exports =router;
