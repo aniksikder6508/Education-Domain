@@ -12,7 +12,9 @@ const app	                = express();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+//app.use(bodyParser.json());
 app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: false}));
+//app.use(expressValidator());
 
 app.use('/assets',express.static('assets'));
 app.use('/admin',admin);
