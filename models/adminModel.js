@@ -109,6 +109,12 @@ module.exports= {
 			callback(results);
 		});
 	},
+	userUpdate:function(user,callback){
+		var sql="update userinfo set name='"+user.name+"',email='"+user.email+"',gender='"+user.gender+"',address='"+user.address+"',dob='"+user.dob+"',blood='"+user.blood+"',status='"+user.status+"' where id='"+user.id+"'";
+		db.execute(sql,function(results){
+			callback(results);
+		});
+	},
 	update:function(user, callback){
 		var sql= "update userinfo set password='"+user.password+"'  where id='"+user.id+"'";
 		db.execute(sql,function(results){
@@ -124,7 +130,7 @@ module.exports= {
 
 	},
 	search: function(search, callback){
-		var sql = "select * from userinfo WHERE id = '"+search+"' OR name = '"+search+"' OR email = '"+search+"' OR contact = '"+search+"'  OR type = '"+search+"'";
+		var sql = "select * from userinfo WHERE (id = '"+search+"' AND type !='Admin' )OR name = '"+search+"' OR email = '"+search+"' OR contact = '"+search+"'  OR type = '"+search+"'";
 		db.getResults(sql, function(results){
 			if(results.length >0 ){
 				callback(results[0]);
