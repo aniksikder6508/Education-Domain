@@ -1,9 +1,10 @@
 const express = require('express');
+const upload = require('express-fileupload');
 const adminModel    =   require.main.require('./models/adminModel');
 const teacherModel    =   require.main.require('./models/teacherModel');
 const { body, validationResult } = require('express-validator');
-
 const router = express.Router();
+
 
 
 router.get('/',(req,res)=>{
@@ -260,5 +261,32 @@ router.post('/password',[body('oldpass').isLength({min:1}),body('newpass').isLen
 
 
 
+router.get('/fileupload',(req,res)=>{
+    if(req.session.sid != null){
+        
+        res.render('teacher/fileupload');
+    }
+    else{
+        res.redirect('/login');
+    }
+
+   
+});
+
+router.post('/fileupload',(req,res)=>{
+    if(req.session.sid != null){
+
+        var user={
+           upload:req.files,
+           sec:req.body.sec
+        }
+         console.log(user);
+         
+     }
+     else{
+         res.redirect('/login');
+     }
+
+});
 
 module.exports =router;
