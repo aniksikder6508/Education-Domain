@@ -1,6 +1,7 @@
-const express       =   require('express');
-const adminModel    =   require.main.require('./models/adminModel');
-const router        =   express.Router();
+const express                       =   require('express');
+const adminModel                    =   require.main.require('./models/adminModel');
+const {body,validationResult}      = require('express-validator');
+const router                           =   express.Router();
 
 router.get('/',(req,res)=>{
 
@@ -62,15 +63,28 @@ router.get('/adduser',(req,res)=>{
 
    
 });
+/*[
+    body('name').isLength({min:4}),
+    body('email').isEmail(),
+body('address').isLength({min:5}),
+body('contact').isNumeric({min:4}),
+body('blood').isLength({min:1}),
+body('status').isLength({min:4}),
+body('type').isLength({min:4})] */
 
-router.post('/adduser',(req,res)=>{
-    //var id=req.session.sid;
-    //console.log(id);
-     /* adminModel.getLastId(function(results){
-            var id=results.id+1;
-            console.log("Last ID:"+id);
-           
-        });*/
+router.post('/adduser',[
+    body('name').isLength({min:4}),
+    body('email').isEmail(),
+    body('address').isLength({min:5}),
+    body('contact').isNumeric({min:4}),
+    body('blood').isLength({min:1}),
+    body('status').isLength({min:4}),
+    body('type').isLength({min:4})],(req,res)=>{
+    
+        const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+             return res.status(400).json({ errors: errors.array() });
+            }
         if(req.body.name!="" && req.body.email!="" && req.body.address!="" && req.body.gender!="" && req.body.contact!="" && req.body.blood!="" && req.body.status!="" && req.body.type!=""){
             console.log('Success');
             if(req.body.type ==='Admin'){
@@ -170,10 +184,6 @@ router.post('/adduser',(req,res)=>{
             res.render('admin/adduser');
             console.log('Failed');
         }
-        
-        
-    
-  
 });
 router.get('/addcourse',(req,res)=>{
     if(req.session.sid != null){
@@ -256,7 +266,16 @@ router.get('/edituser',(req,res)=>{
         res.redirect('/login');
     }
 });
-router.post('/edituser',(req,res)=>{
+router.post('/edituser',
+    [body('name').isLength({min:4}),
+    body('email').isEmail(),
+    body('gender').isLength({min:4}),
+    body('dob').isLength({min:4}),
+    body('address').isLength({min:4}),
+    body('contact').isLength({min:4}),
+    body('blood').isLength({min:4}),
+    ]
+,(req,res)=>{
     var id=req.session.sid;
     var admininfo={
         name:req.body.name,
@@ -307,7 +326,12 @@ router.get('/password',(req,res)=>{
     
 });
 
-router.post('/password',(req,res)=>{
+router.post('/password',
+    [body('oldpass').isLength({min:4}),
+    body('newpass').isLength({min:4}),
+    body('newpass2').isLength({min:4})
+    ]
+    ,(req,res)=>{
     var id=req.session.sid;
     adminModel.getById(id,function(results){
         var admin={
@@ -343,6 +367,14 @@ router.post('/password',(req,res)=>{
 router.get('/user',(req,res)=>{
         res.render('admin/user');
 });
+router.post('/user',(req,res)=>{
+    adminModel.search(req.body.search,function(results){
+        res.json({
+            results: results
+        });
+    });
+    
+});
 router.get('/book',(req,res)=>{
     if(req.session.sid != null){
         var id=req.session.sid;
@@ -367,7 +399,11 @@ router.get('/book',(req,res)=>{
     }
     //res.render('admin/book');
 });
-router.post('/book',(req,res)=>{
+router.post('/book',[body('bookName').isLength({min:5}),body('author').isLength({min: 4}),body('category').isLength({min:4})],(req,res)=>{
+    const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+             return res.status(400).json({ errors: errors.array() });
+            }
     var book={
         bookName:req.body.bookName,
         author:req.body.author,
@@ -412,7 +448,7 @@ router.get('/news',(req,res)=>{
     }
 });
 
-router.post('/news',(req,res)=>{
+router.post('/news',[body('title').isLength({min:4}),body('description').isLength({min:4}),body('type').isLength({min:4})],(req,res)=>{
         var news={
             title:req.body.title,
             description:req.body.description,
@@ -434,9 +470,6 @@ router.post('/news',(req,res)=>{
             }
         });
         
-    
-    
-
 });
 router.get('/editnews/:id',(req,res)=>{
     //res.render('admin/editnews');
@@ -505,6 +538,5 @@ router.post('/deletenews/:id',(req,res)=>{
     });
 
 });
-
 
 module.exports =router;
