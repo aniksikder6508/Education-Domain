@@ -1,10 +1,6 @@
 const express               = require('express');
 const bodyParser 			= require('body-parser');	
 const exSession 			= require('express-session');
-<<<<<<< HEAD
-=======
-
->>>>>>> 69fd8fdf0c4453d14614f463200f6c4a51fc1c59
 const admin                 = require('./controllers/admin');
 const login                 = require('./controllers/login');
 const teacher   			= require('./controllers/teacher');
