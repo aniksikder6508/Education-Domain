@@ -38,6 +38,17 @@ module.exports= {
 		});
 	},
 	getLastId: function(callback){
+		var sql ="select * from userinfo ORDER BY id DESC LIMIT 1 "; //"select * from userinfo where username='"+id.id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+	///////////////////////////////////////////////
+	getLastId2: function(callback){
 		var sql ="select * from course ORDER BY id DESC LIMIT 1 "; //"select * from userinfo where username='"+id.id+"'";
 		db.getResults(sql, function(results){
 			if(results.length >0 ){
@@ -109,7 +120,25 @@ module.exports= {
 			callback(true);
 		});
 
+	},
+	search: function(search, callback){
+		var sql = "select * from library WHERE bookId = '"+search+"' OR bookName = '"+search+"' OR author = '"+search+"' OR category = '"+search+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+	searchCourse: function(search, callback){
+		var sql = "select * from course WHERE id = '"+search+"' OR courseName = '"+search+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
 	}
-
-
 }

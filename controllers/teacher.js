@@ -1,6 +1,8 @@
 const express = require('express');
 const adminModel    =   require.main.require('./models/adminModel');
 const teacherModel    =   require.main.require('./models/teacherModel');
+const { body, validationResult } = require('express-validator');
+
 const router = express.Router();
 
 
@@ -46,11 +48,15 @@ router.get('/notice',(req,res)=>{
 
 
 
-router.post('/notice',(req,res)=>{
+router.post('/notice',[body('text').isLength({min:1})],(req,res)=>{
     //res.render('teacher/notice');
     //res.send(req.body.text);
-
     if(req.session.sid != null){
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.send("<h2>Please fillup the form</h2>");
+        }
             var id=req.session.sid;
             var user={
                 id:req.session.sid,
@@ -98,16 +104,24 @@ router.get('/edit/:id', (req, res)=>{
 
 
 
-router.post('/edit/:id', (req, res)=>{
+router.post('/edit/:id',[body('update').isLength({min:1})],(req, res)=>{
+
+
     var editnotice={
      id:req.params.id,
      notice:req.body.update
     }
     //console.log("edit id:"+id);
     if(req.session.sid != null){
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.send('<h2>Please fillup the notice</h2>');
+        }
+
        teacherModel.update(editnotice,function(results){
            
-           res.redirect('/teacher');
+           res.redirect('/teacher/checknotice');
        })
     }
 	
@@ -139,7 +153,7 @@ router.post('/delete/:id', (req, res)=>{
     if(req.session.sid != null){
         teacherModel.delete(deletenotice,function(results){
             
-            res.redirect('/teacher');
+            res.redirect('/teacher/checknotice');
         })
      }
 
@@ -204,9 +218,16 @@ router.get('/password',(req,res)=>{
     
 });
 
-router.post('/password',(req,res)=>{
+router.post('/password',[body('oldpass').isLength({min:1}),body('newpass').isLength({min:1}),body('newpass2').isLength({min:1})],(req,res)=>{
     var id=req.session.sid;
     teacherModel.getPassword(id,function(results){
+
+        const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.send("<h2>Please fillup the field</h2>");
+    
+  }
+
         var teacher={
             password:results.password
         };
