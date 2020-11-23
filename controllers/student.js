@@ -1,6 +1,7 @@
 const express = require('express');
 const adminModel = require.main.require('./models/adminModel');
 const studentModel = require.main.require('./models/studentModel');
+const {body,validationResult}       = require('express-validator');
 const router = express.Router();
 
 
@@ -38,7 +39,28 @@ const router = express.Router();
 // });
 
 //student info 
+// (async function(){
+//       try{
+//           const browser = await puppeteer.launch();
+//           const page = await browser.page();
 
+//       await page.setContent('<h1>hello</h1>');
+//       await page.emulatemedia('screen');
+//       await page.pdf({
+//           path:'mypdf.pdf',
+//           format :'A4',
+//           printBackground:true
+//       });
+//       console.log('done')
+//       await browser.close();
+//       process.exit();
+//     } 
+
+//     catch(e){
+//         console.log('our error',e)
+
+//     }
+// })();
 
 router.get('/',(req,res)=>{
     if(req.session.sid != null){
@@ -107,6 +129,13 @@ router.get('/CoursesResult',(req,res)=>{
         res.redirect('/login');
     }
 });
+router.post('/CoursesResult',(req,res)=>{
+    studentModel.searchCourse(req.body.search,function(results){
+        res.json({
+            results: results
+        });
+    });  
+});
 
 
 
@@ -159,13 +188,19 @@ router.get('/Library',(req,res)=>{
             console.log(book);
             res.render('student/Library',book)
        });
+
     }
     else{
         res.redirect('/login');
     }
 });
 router.post('/Library',(req,res)=>{
-    res.send(req.body.text);
+    studentModel.search(req.body.search,function(results){
+        res.json({
+            results: results
+        });
+    });
+    
 });
 ////////////////////////////////////
 
@@ -173,7 +208,7 @@ router.get('/Profile/password',(req,res)=>{
     if(req.session.sid != null){
         var id=req.session.sid;
         //res.render('student/password');
-        console.log("session:"+id);
+        //console.log("session:"+id);
         studentModel.getById(id,function(results){
             var student={
                 status:results.status,
@@ -195,7 +230,16 @@ router.get('/Profile/password',(req,res)=>{
     
 });
 
-router.post('/Profile/password',(req,res)=>{
+router.post('/Profile/password',
+[body('oldpass').isLength({min:4}),
+body('newpass').isLength({min:4}),
+body('newpass2').isLength({min:4})
+],
+(req,res)=>{
+    const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+             return res.status(400).json({ errors: errors.array() });
+            }
     var id=req.session.sid;
  studentModel.getById(id,function(results){
         var student={
@@ -211,6 +255,7 @@ router.post('/Profile/password',(req,res)=>{
                 studentModel.update(user,function(results){
                     if(results){
                         console.log('Password Reset Successfully');
+                        res.render('/student');
                     }
                     else{
                         console.log('Query erorr');
