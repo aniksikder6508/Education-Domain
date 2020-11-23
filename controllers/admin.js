@@ -236,7 +236,7 @@ router.post('/addcourse',(req,res)=>{
 
 });
 
-router.get('/edituser',(req,res)=>{
+router.get('/admininfo',(req,res)=>{
     if(req.session.sid != null){
         var id=req.session.sid;
         //console.log("session:"+id);
@@ -254,7 +254,7 @@ router.get('/edituser',(req,res)=>{
             };
             console.log(admin);
             if(admin.type==='Admin' && admin.status==='Active'){
-                res.render('admin/edituser',admin);
+                res.render('admin/admininfo',admin);
             }
             else{
                 res.redirect('/login');
@@ -266,7 +266,7 @@ router.get('/edituser',(req,res)=>{
         res.redirect('/login');
     }
 });
-router.post('/edituser',
+router.post('/admininfo',
     [body('name').isLength({min:4}),
     body('email').isEmail(),
     body('gender').isLength({min:4}),
@@ -365,15 +365,68 @@ router.post('/password',
 });
 
 router.get('/user',(req,res)=>{
-        res.render('admin/user');
+    if(req.session.sid != null){
+        var id=req.session.sid;
+        //console.log("session:"+id);
+        adminModel.getById(id,function(results){
+            var admin={
+                status:results.status,
+                type:results.type
+            };
+            console.log(admin);
+            if(admin.type==='Admin' && admin.status==='Active'){
+                res.render('admin/user');
+            }
+            else{
+                res.redirect('/login');
+            }
+
+        });
+    }
+    else{
+        res.redirect('/login');
+    }
+        //res.render('admin/user');
 });
 router.post('/user',(req,res)=>{
-    adminModel.search(req.body.search,function(results){
-        res.json({
-            results: results
+    if(req.body.id!=null){
+        //console.log("Sucees:");
+        console.log("ID:"+req.body.id);
+        var user={
+                id:req.body.id,
+                name:req.body.name,
+                email:req.body.email,
+                gender:req.body.gender,
+                address:req.body.address,
+                dob:req.body.dob,
+                contact:req.body.contact,
+                blood:req.body.blood,
+                status:req.body.status
+        }
+        console.log(user);
+        adminModel.userUpdate(user,function(results){
+           
+            if(results){
+                res.redirect('admin/user');
+            }
         });
-    });
+    }
+    else if(req.body.deleteId!=null){
+        console.log(req.body.deleteId);
+    }
+    else if(req.body.search!=""){
+        console.log(req.body.search);
+        adminModel.search(req.body.search,function(results){
+            res.json({
+                results: results
+            });
+        });
     
+    }
+    else{
+        console.log('Empty');
+    }
+   
 });
 router.get('/book',(req,res)=>{
     if(req.session.sid != null){
@@ -461,7 +514,8 @@ router.post('/news',[body('title').isLength({min:4}),body('description').isLengt
                 adminModel.getAllNews(function(results){
                     adminModel.getAllNotices(function(results2){
                         console.log(results2);
-                        res.render('admin/news',{users:{results,results2}});
+                        //res.render('admin/news',{users:{results,results2}});
+                        res.redirect('admin/news');
                     });
                 });
             }
@@ -499,7 +553,7 @@ router.post('/editnews/:id',(req,res)=>{
         adminModel.getAllNews(function(results){
             adminModel.getAllNotices(function(results2){
                 console.log(results2);
-                res.render('admin/news',{users:{results,results2}});
+                res.redirect('/admin/news');
             });
         });
         
@@ -531,7 +585,7 @@ router.post('/deletenews/:id',(req,res)=>{
         adminModel.getAllNews(function(results){
             adminModel.getAllNotices(function(results2){
                 console.log(results2);
-                res.render('admin/news',{users:{results,results2}});
+                res.redirect('/admin/news');
             });
         });
         
