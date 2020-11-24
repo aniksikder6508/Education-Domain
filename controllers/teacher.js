@@ -289,4 +289,74 @@ router.post('/fileupload',(req,res)=>{
 
 });
 
+
+
+router.get('/tsf',(req,res)=>{
+   
+    if(req.session.sid != null){
+        // var id=req.session.sid;
+         teacherModel.tsf(function(results){
+             res.render('teacher/tsf',{users: results});
+             });
+     }
+     else{
+         res.redirect('/login');
+     }
+
+   
+});
+
+router.get('/tsfedit/:id', (req, res)=>{
+    var id=req.params.id;
+    console.log(id);
+    if(req.session.sid != null){
+       teacherModel.getByTsfId(id,function(results){
+           var editnotice={
+               day:results.day,
+               slot1:results.slot1,
+               slot2:results.slot2,
+               slot3:results.slot3,
+               slot4:results.slot4,
+           };
+           res.render('teacher/tsfedit',editnotice);
+       })
+    }
+
+    else{
+        res.redirect('/login');
+    }
+	
+});
+
+
+
+router.post('/tsfedit/:id',(req, res)=>{
+
+
+    var editslot={
+     id:req.params.id,
+     slot1:req.body.slot1,
+     slot2:req.body.slot2,
+     slot3:req.body.slot3,
+     slot4:req.body.slot4,
+
+    }
+    //console.log("edit id:"+id);
+    if(req.session.sid != null){
+
+       teacherModel.tsfupdate(editslot,function(results){
+           
+           res.redirect('/teacher/tsf');
+       })
+    }
+
+    else{
+        res.redirect('/login');
+    }
+
+
+	
+});
+
+
 module.exports =router;

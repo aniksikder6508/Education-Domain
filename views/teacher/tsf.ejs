@@ -121,7 +121,7 @@
 
     <div>
 
-      <h3 align='center'>Class routine</h3>
+      <h3 align='center'>TSF</h3>
     <table class="table">
       <thead>
         <tr>
@@ -130,6 +130,7 @@
           <th scope="col">Slot-2</th>
           <th scope="col">Slot-3</th>
           <th scope="col">Slot-4</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -141,7 +142,10 @@
 				<td><%= std.slot1 %></td>
 				<td><%= std.slot2 %></td>
 				<td><%= std.slot3 %></td>
-				<td><%= std.slot4 %></td>
+                <td><%= std.slot4 %></td>
+                <td>
+					<a href="/teacher/tsfedit/<%= std.id %>">Edit</a>
+        </td>
 			</tr>
 
 		<%

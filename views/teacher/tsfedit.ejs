@@ -72,13 +72,7 @@
                   <a href="/teacher" class="nav-link text-left">Home</a>
                 </li>
                 <li>
-                  <a href="/teacher/notice" class="nav-link text-left">Notice</a>
-                </li>
-                <li>
-                  <a href="/teacher/studentlist" class="nav-link text-left">View students</a>
-                </li>
-                <li>
-                  <a href="teacher/password" class="nav-link text-left">Change Password</a>
+                  <a href="/teacher/password" class="nav-link text-left">Change Password</a>
                 </li>
                 <li>
                   <a href="/logout" class="nav-link text-left">Logout</a>
@@ -105,7 +99,7 @@
         <div class="container">
           <div class="row align-items-end justify-content-center text-center">
             <div class="col-lg-7">
-              <h2 class="mb-0">My Information</h2>
+              <h2 class="mb-0">checknotice</h2>
              <p></p>
             </div>
           </div>
@@ -117,39 +111,33 @@
         <div class="container">
 
 
-           
 
     <div>
 
-      <h3 align='center'>Class routine</h3>
+      <h3 align='center'>Notices</h3>
+      <form method="post">
     <table class="table">
       <thead>
         <tr>
           <th scope="col">Day</th>
-          <th scope="col">Slot-1</th>
-          <th scope="col">Slot-2</th>
-          <th scope="col">Slot-3</th>
-          <th scope="col">Slot-4</th>
+          <th scope="col">Slot1</th>
+          <th scope="col">Slot2</th>
+          <th scope="col">Slot3</th>
+          <th scope="col">Slot4</th>
         </tr>
       </thead>
       <tbody>
-       
-        <% 
-			users.forEach( function(std){ %>
-			<tr>	
-				<td><%= std.day %></td>
-				<td><%= std.slot1 %></td>
-				<td><%= std.slot2 %></td>
-				<td><%= std.slot3 %></td>
-				<td><%= std.slot4 %></td>
-			</tr>
-
-		<%
-			}); 
-		%>
+			<tr>
+        <td><%= day %></td>
+       <td><input type="text"  name="slot1" class="form-control form-control-lg" value="<%= slot1 %>"></td>
+       <td><input type="text"  name="slot2" class="form-control form-control-lg" value="<%= slot2 %>"></td>
+       <td><input type="text"  name="slot3" class="form-control form-control-lg" value="<%= slot3 %>"></td>
+       <td><input type="text"  name="slot4" class="form-control form-control-lg" value="<%= slot4 %>"></td> 
+    </tr>
       </tbody>
     </table>
-
+    <button type="submit" class="btn btn-primary">Post</button>
+      </form>
     </div>
     
     <div class="footer">

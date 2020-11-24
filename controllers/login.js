@@ -47,7 +47,8 @@ router.post('/',(req,res)=>{
             console.log('error');
             req.session.errors="Invalid ID or Password.";
             //res.redirect('/login',req.session.errors);
-            res.redirect('/login',req.session.errors);
+            // res.redirect('/login',req.session.errors);
+             res.redirect('/login');
         }
     });
 

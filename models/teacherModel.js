@@ -86,7 +86,39 @@ module.exports= {
 		db.execute(sql,function(results){
 				callback(true);
 		});
-	}
+	},
+
+	tsf: function(callback){
+		var sql ="select * from tsf";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+	getByTsfId: function(id, callback){
+		var sql ="select * from tsf where id='"+id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+	tsfupdate:function(editslot,callback){
+
+	//	var sql= "update tsf set slot1='"+editslot.slot1+"',slot2='"+editslot.slot2+"',slot3='"+editslot.slot3+"',slot4='"+editslot.slot4+"',  where id='"+editslot.id+"'";
+		//var sql= "update tsf set slot1='"+editslot.slot1+"',slot2='"+editslot.slot2+"' where id='"+editslot.id+"'";
+		var sql= "update tsf set slot1='"+editslot.slot1+"',slot2='"+editslot.slot2+"',slot3='"+editslot.slot3+"',slot4='"+editslot.slot4+"' where id='"+editslot.id+"'";
+
+
+
+		
+		db.execute(sql,function(results){
+				callback(true);
+		});
+
+	},
 
 
 	}
