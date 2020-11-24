@@ -359,4 +359,73 @@ router.post('/tsfedit/:id',(req, res)=>{
 });
 
 
+router.get('/grade',(req,res)=>{
+   
+    if(req.session.sid != null){
+        // var id=req.session.sid;
+         teacherModel.grade(function(results){
+             res.render('teacher/grade',{users: results});
+             });
+     }
+     else{
+         res.redirect('/login');
+     }
+
+   
+});
+
+
+router.get('/gradeedit/:id', (req, res)=>{
+    var id=req.params.id;
+    console.log(id);
+    if(req.session.sid != null){
+       teacherModel.getByGradeId(id,function(results){
+           var editnotice={
+               sid:results.sid,
+               Midterm:results.Midterm,
+               Finalterm:results.Finalterm
+           };
+           res.render('teacher/gradeedit',editnotice);
+       })
+    }
+
+    else{
+        res.redirect('/login');
+    }
+	
+});
+
+
+router.post('/gradeedit/:id',(req, res)=>{
+
+var r=Number(req.body.Midterm+req.body.Finalterm);
+
+console.log(r);
+
+    var editgrade={
+     id:req.params.id,
+     Midterm:req.body.Midterm,
+     Finalterm:req.body.Finalterm,
+     Total:r
+    }
+    //console.log("edit id:"+id);
+    if(req.session.sid != null){
+
+       teacherModel.gradeupdate(editgrade,function(results){
+           
+           res.redirect('/teacher/grade');
+       })
+    }
+
+    else{
+        res.redirect('/login');
+    }
+
+
+	
+});
+
+
+
+
 module.exports =router;

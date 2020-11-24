@@ -121,4 +121,35 @@ module.exports= {
 	},
 
 
+	grade: function(callback){
+		var sql ="select * from gradeshit";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+
+
+	getByGradeId: function(id, callback){
+		var sql ="select * from gradeshit where id='"+id+"'";
+		db.getResults(sql, function(results){
+			if(results.length >0 ){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+
+	
+	gradeupdate:function(editgrade,callback){
+
+		
+         var sql= "update gradeshit set Midterm='"+editgrade.Midterm+"',Finalterm='"+editgrade.Finalterm+"',Total='"+editgrade.Total+"' where id='"+editgrade.id+"'";
+			db.execute(sql,function(results){
+					callback(true);
+			});
+	
+		}
+
 	}
